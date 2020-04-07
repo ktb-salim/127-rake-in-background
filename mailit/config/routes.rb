@@ -1,4 +1,8 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :mailings, :member => { :deliver => :post }
-  map.root :mailings
+Rails.application.routes.draw do
+  root 'mailings#index'
+
+  resources :mailings do
+    resources :deliver
+    post 'deliver' => 'deliver'
+  end
 end

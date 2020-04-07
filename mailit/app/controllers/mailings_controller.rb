@@ -6,7 +6,7 @@ class MailingsController < ApplicationController
   end
   
   def index
-    @mailings = Mailing.find(:all)
+    @mailings = Mailing.all
   end
   
   def show
@@ -18,7 +18,7 @@ class MailingsController < ApplicationController
   end
   
   def create
-    @mailing = Mailing.new(params[:mailing])
+    @mailing = Mailing.new(mailing_params)
     if @mailing.save
       flash[:notice] = "Successfully created mailing."
       redirect_to @mailing
@@ -47,4 +47,10 @@ class MailingsController < ApplicationController
     flash[:notice] = "Successfully destroyed mailing."
     redirect_to mailings_url
   end
+
+	private
+
+	def mailing_params
+		params.require(:mailing).permit(:subject, :content, :delivered_at)
+	end
 end
